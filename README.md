@@ -37,3 +37,29 @@ A successful SQL injection attack could lead to sensitive data being exposed, ac
 Prevention
 
 SQL injection can be prevented by using parameterised queries, prepared statements, input validation, and least privilege database permissions.
+
+## Reflected Cross Site Scripting (XSS)
+
+Reflected XSS is a web vulnerability where user input is immediately displayed back onto a webpage without proper filtering or encoding.
+
+In this lab, the website had a search bar that reflected the search input directly into the page. By entering:
+
+<script>alert(1)</script>
+
+the browser treated the input as JavaScript code instead of plain text and executed it.
+
+This caused a popup box to appear showing:
+
+1
+
+What I learned
+
+Reflected XSS works when a website trusts user input too much and sends it back into the webpage without sanitising it properly. The browser then executes the injected JavaScript.
+
+Impact
+
+A successful XSS attack could allow an attacker to steal session cookies, capture user input, redirect users, or modify webpage content.
+
+Prevention
+
+XSS can be prevented by properly encoding output, sanitising user input, using secure frameworks, and implementing Content Security Policy (CSP).

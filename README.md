@@ -75,3 +75,31 @@ A successful XSS attack could allow an attacker to steal session cookies, captur
 ### Prevention
 
 XSS can be prevented by properly encoding output, sanitising user input, using secure frameworks, and implementing Content Security Policy (CSP).
+
+## DOM Based Cross Site Scripting (DOM XSS)
+
+DOM XSS is a type of cross site scripting vulnerability where the attack happens inside the browser through client side JavaScript.
+
+In this lab, the website used JavaScript to take the search value from the URL and write it directly into the page using document.write().
+
+By changing the URL search parameter to:
+
+"><svg onload=alert(1)>
+
+the input broke out of the existing HTML attribute and injected a new SVG element containing JavaScript.
+
+When the page loaded, the onload event executed automatically and displayed a popup box showing:
+
+1
+
+What I learned
+
+DOM XSS happens when JavaScript on the page trusts user controlled data too much and inserts it into the DOM without sanitising or encoding it properly.
+
+Impact
+
+A successful DOM XSS attack could allow attackers to execute JavaScript in another user’s browser, steal session data, modify webpage content, redirect users, or perform actions on behalf of the victim.
+
+Prevention
+
+DOM XSS can be prevented by avoiding dangerous functions such as document.write(), properly sanitising user input, safely handling DOM updates, and using secure frameworks and Content Security Policy.

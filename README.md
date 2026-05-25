@@ -84,13 +84,17 @@ In this lab, the website used JavaScript to take the search value from the URL a
 
 By changing the URL search parameter to:
 
+```html
 "><svg onload=alert(1)>
+```
 
 the input broke out of the existing HTML attribute and injected a new SVG element containing JavaScript.
 
 When the page loaded, the onload event executed automatically and displayed a popup box showing:
 
+```text
 1
+```
 
 What I learned
 

@@ -1,4 +1,4 @@
-# SQL Injection — Retrieving Hidden Data
+# SQL Injection  Retrieving Hidden Data
 
 **Lab Source:** PortSwigger Web Security Academy  
 **OWASP Category:** A03:2021 — Injection  
@@ -34,13 +34,13 @@ The `AND released = 1` condition was intentionally restricting the results — i
 
 ---
 
-## Exploitation — Step by Step
+## Exploitation  Step by Step
 
-**Step 1 — Identify the injection point**
+**Step 1  Identify the injection point**
 
 The `category` parameter was being placed directly into the SQL query. If the application wasn't sanitising that input, I could change the query's logic by adding SQL syntax.
 
-**Step 2 — Craft the payload**
+**Step 2  Craft the payload**
 
 I modified the URL to:
 
@@ -62,7 +62,7 @@ Breaking down what happened:
 - `OR 1=1` — added a condition that is always true, so every product matched
 - `--` — commented out the rest of the query, including the `AND released = 1` restriction
 
-**Step 3 — Result**
+**Step 3  Result**
 
 The application returned all products in the database, including the hidden unreleased ones.
 

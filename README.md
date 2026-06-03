@@ -12,10 +12,12 @@ Each lab write-up covers what the vulnerability is, how I exploited it in a cont
 
 | OWASP Category | Vulnerability | Lab Source | Status |
 |---|---|---|---|
-| [A03 — Injection](./A03-Injection/) | SQL Injection | PortSwigger | ✅ Complete |
-| [A03 — Injection](./A03-Injection/) | Reflected XSS | PortSwigger | ✅ Complete |
-| [A03 — Injection](./A03-Injection/) | Stored XSS | PortSwigger | ✅ Complete |
-| [A03 — Injection](./A03-Injection/) | DOM-Based XSS | PortSwigger | ✅ Complete |
+| A03 — Injection | SQL Injection | PortSwigger | ✅ Complete |
+| A03 — Injection | Reflected XSS | PortSwigger | ✅ Complete |
+| A03 — Injection | Stored XSS | PortSwigger | ✅ Complete |
+| A03 — Injection | DOM-Based XSS | PortSwigger | ✅ Complete |
+| A03 — Injection | SQL UNION Column Count | PortSwigger | ✅ Complete |
+| A03 — Injection | SQL UNION Text Column | PortSwigger | ✅ Complete |
 
 More categories being added as I work through them.
 
@@ -35,6 +37,12 @@ More categories being added as I work through them.
 owasp-top-10-notes/
 └── A03-Injection/
     ├── sql-injection/
+    │   ├── README.md
+    │   └── screenshots/
+    ├── sql-union-column-count/
+    │   ├── README.md
+    │   └── screenshots/
+    ├── sql-union-text-column/
     │   ├── README.md
     │   └── screenshots/
     ├── reflected-xss/

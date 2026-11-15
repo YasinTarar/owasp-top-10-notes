@@ -1,18 +1,88 @@
-# Reflected XSS in a search page
+# Reflected Cross-Site Scripting (XSS)
 
-I entered a search term and checked where it appeared in the returned HTML. The page echoed it into the search results message, so I tried a small script in the same field.
+**Lab Source:** PortSwigger Web Security Academy  
+**OWASP Category:** A03:2021 Injection  
+**Difficulty:** Apprentice
+
+## What Is Reflected XSS?
+
+Reflected XSS happens when an application takes user input, includes it in the HTTP response without sanitising it, and the browser executes it as code rather than displaying it as text.
+
+The word "reflected" describes the flow: the payload goes in, hits the server, and bounces straight back out inside the page. It's not stored anywhere. It only fires for the person who sends the malicious request, which is why it usually requires a victim to click a crafted link.
+
+## The Lab Scenario
+
+The target application had a search bar. When a user searched for something, the search term was reflected back into the page in a message like:
 
 ```
+You searched for: boots
+```
+
+The search term was being placed directly into the HTML without any encoding or filtering.
+
+## How I tested it
+
+**Step 1. Confirm the reflection**
+
+I entered a basic test string in the search bar and checked the page source to see exactly where and how it appeared in the HTML.
+
+**Step 2. Test for script execution**
+
+I submitted:
+
+```html
 <script>alert(1)</script>
 ```
 
-An alert opened when I submitted the search. The input travelled in the request and came straight back in the response. A visitor opening a crafted search URL could run JavaScript in the context of that site.
+**Step 3. Result**
 
-For this HTML text context I would escape the search term when rendering it. A restrictive Content Security Policy gives the browser another way to block inline scripts.
+The application reflected the input directly into the page without escaping it. The browser parsed the `<script>` tags as HTML and executed the JavaScript, causing an alert box to pop up displaying `1`.
+
+This confirmed that the application was treating user input as trusted HTML rather than plain text.
 
 ## Screenshots
 
-* [01 alert payload](screenshots/01-alert-payload.png)
-* [02 popup result](screenshots/02-popup-result.png)
+| Screenshot | Description |
+|---|---|
+| `01-alert-payload.png` | Payload entered into the search bar |
+| `02-popup-result.png` | Alert box triggered in the browser |
 
-[Back to my PortSwigger injection labs](../README.md)
+## Real-World Impact
+
+The alert confirmed that the browser executed my script. The same flaw could let someone run other JavaScript on that page.
+
+With reflected XSS, an attacker could:
+
+* Steal a victim's session cookie by redirecting it to an attacker-controlled server
+* Capture keystrokes or form submissions (credentials, payment details)
+* Redirect the victim to a phishing page
+* Modify the content of the page to display false information
+* Perform actions on the victim's behalf if they're logged in
+
+The attack typically requires the victim to click a specially crafted link containing the payload in the URL. These links are often distributed through phishing emails or messages.
+
+## How to Prevent It
+
+**Output encoding**
+
+When user input is included in an HTML page, it needs to be encoded so the browser treats it as text rather than HTML or JavaScript. Most templating engines do this automatically.
+
+For example, `<script>alert(1)</script>` should be rendered as:
+
+```
+&lt;script&gt;alert(1)&lt;/script&gt;
+```
+
+The browser displays those characters as literal text rather than executing them as code.
+
+**Content Security Policy (CSP)**
+
+CSP is an HTTP header that tells the browser which sources of scripts are allowed to run. A strict policy can prevent inline scripts like `<script>alert(1)</script>` from executing entirely, even if they're reflected into the page.
+
+**Input validation**
+
+Validate input on the server side. If a field expects a search term, it shouldn't accept angle brackets or script tags. Validation reduces the attack surface. I would also encode the search term when displaying it.
+
+**Framework defaults**
+
+Modern frameworks like React, Angular, and Django's templating engine automatically escape output by default. Avoid bypassing these defaults unless absolutely necessary.

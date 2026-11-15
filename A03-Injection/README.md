@@ -1,10 +1,33 @@
-# Injection labs
+# A03:2021 Injection
 
-I grouped these under A03 in the 2021 OWASP Top 10. In the SQL labs I changed one part of a product filter at a time and compared the response. For XSS, I followed the input into the browser to see where it first became executable.
+Injection vulnerabilities occur when untrusted data is sent to an interpreter as part of a command or query. The interpreter executes the data as code rather than treating it as plain text, which gives an attacker the ability to change the intended behaviour of the application.
 
-1. [Retrieving hidden products](sql-injection/README.md)
-2. [Counting columns with SQL UNION](sql-union-column-count/README.md)
-3. [Finding the column that accepts text](sql-union-text-column/README.md)
-4. [Reflected XSS in a search page](reflected-xss/README.md)
-5. [Stored XSS in blog comments](stored-xss/README.md)
-6. [DOM XSS in a tracking image](dom-xss/README.md)
+In the OWASP Top 10 (2021 edition), Injection moved to the third position. It covers a broad family of attacks including SQL injection, cross-site scripting, command injection, and more.
+
+## Labs Completed
+
+| Vulnerability | Description | Folder |
+|---|---|---|
+| SQL Injection | Manipulating database queries via unsanitised user input | [sql-injection/](./sql-injection/) |
+| Reflected XSS | Injecting scripts that are reflected back in the HTTP response | [reflected-xss/](./reflected-xss/) |
+| Stored XSS | Injecting persistent scripts that execute for every user who visits a page | [stored-xss/](./stored-xss/) |
+| DOM-Based XSS | Client-side script injection through unsafe DOM manipulation | [dom-xss/](./dom-xss/) |
+
+## Why Injection Matters
+
+Injection attacks have been a top vulnerability for over a decade. They're common because:
+
+* Developers often trust user input without validating or sanitising it
+* Legacy codebases frequently use string concatenation to build queries
+* Input can reach an interpreter through many routes including URL parameters, form fields, headers, cookies
+
+A single injection vulnerability in the right place can compromise an entire application or its underlying database.
+
+## Common Prevention Principles
+
+While each vulnerability type has its own specific fix, the underlying defence is consistent:
+
+* **Never trust user input.** Always validate and sanitise
+* **Use parameterised queries.** Separate data from code
+* **Encode output.** Make injected content harmless when rendered
+* **Apply the principle of least privilege.** Limit what an exploited component can actually do

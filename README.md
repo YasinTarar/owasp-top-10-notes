@@ -1,78 +1,16 @@
-# OWASP Top 10 — Web Security Learning Portfolio
+# My web security labs
 
-This repository documents my hands-on practice with common web application vulnerabilities, using PortSwigger Web Security Academy labs as the primary learning environment.
+I worked through six PortSwigger Web Security Academy labs to understand how a search term, a comment or a product filter can change what an application does. I used Burp Suite Community Edition to inspect requests and browser DevTools to follow values into the page.
 
-Each lab write-up covers what the vulnerability is, how I exploited it in a controlled setting, what the real-world impact would be, and how developers can prevent it.
+## SQL injection and XSS
 
-> **Context:** First year BSc Cybersecurity student at the University of Roehampton. This portfolio is a record of practical learning alongside my degree — not just theory, but actual exploitation and analysis.
+1. [Retrieving hidden products](A03-Injection/sql-injection/README.md)
+2. [Counting columns with SQL UNION](A03-Injection/sql-union-column-count/README.md)
+3. [Finding the column that accepts text](A03-Injection/sql-union-text-column/README.md)
+4. [Reflected XSS in a search page](A03-Injection/reflected-xss/README.md)
+5. [Stored XSS in blog comments](A03-Injection/stored-xss/README.md)
+6. [DOM XSS in a tracking image](A03-Injection/dom-xss/README.md)
 
----
+The two UNION labs build on each other. First I used NULL values to work out how many columns the query returned. Then I moved a string between those columns until I could see it on the page. In the XSS labs the most useful question was whether the input came back immediately, persisted for the next visitor or became executable when the browser built the page.
 
-## What's Covered
-
-| OWASP Category | Vulnerability | Lab Source | Status |
-|---|---|---|---|
-| A03 — Injection | SQL Injection | PortSwigger | ✅ Complete |
-| A03 — Injection | Reflected XSS | PortSwigger | ✅ Complete |
-| A03 — Injection | Stored XSS | PortSwigger | ✅ Complete |
-| A03 — Injection | DOM-Based XSS | PortSwigger | ✅ Complete |
-| A03 — Injection | SQL UNION Column Count | PortSwigger | ✅ Complete |
-| A03 — Injection | SQL UNION Text Column | PortSwigger | ✅ Complete |
-
-More categories being added as I work through them.
-
----
-
-## Tools Used
-
-- **PortSwigger Web Security Academy** — lab environment
-- **Burp Suite Community Edition** — request interception and analysis
-- **Browser DevTools** — DOM inspection and source analysis
-
----
-
-## Repository Structure
-
-```
-owasp-top-10-notes/
-└── A03-Injection/
-    ├── sql-injection/
-    │   ├── README.md
-    │   └── screenshots/
-    ├── sql-union-column-count/
-    │   ├── README.md
-    │   └── screenshots/
-    ├── sql-union-text-column/
-    │   ├── README.md
-    │   └── screenshots/
-    ├── reflected-xss/
-    │   ├── README.md
-    │   └── screenshots/
-    ├── stored-xss/
-    │   ├── README.md
-    │   └── screenshots/
-    └── dom-xss/
-        ├── README.md
-        └── screenshots/
-```
-
----
-
-## How to Read These Write-Ups
-
-Each lab folder follows the same structure:
-
-1. **What the vulnerability is** — plain-English explanation
-2. **The lab scenario** — what the target application looked like
-3. **How I exploited it** — step by step, with screenshots
-4. **Real-world impact** — what this would mean outside a lab
-5. **How to prevent it** — the developer's perspective
-
----
-
-## About Me
-
-BSc Cybersecurity student, University of Roehampton (Year 1 — First Class result).  
-Interested in web application security, penetration testing, and threat analysis.
-
-[GitHub Profile →](https://github.com/YasinTarar)
+I study Cyber Security at the University of Roehampton. My [home lab](https://github.com/YasinTarar/cyber-security-home-lab) covers the Linux and network side of my work.

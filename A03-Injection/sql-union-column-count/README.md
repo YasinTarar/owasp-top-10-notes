@@ -1,42 +1,20 @@
-# SQL Injection UNION attack determining the number of columns returned by the query
+# Counting columns with SQL UNION
 
-## Overview
+I tried adding a second result to the category query. I started with one NULL, then two. Both attempts produced a server error.
 
-This lab focused on using a UNION based SQL injection attack to determine the number of columns returned by the original database query.
-
-The vulnerability existed within the product category filter parameter. By injecting UNION SELECT statements into the URL, it was possible to observe how the backend database handled different column counts.
-
-## Objective
-
-The objective of the lab was to identify the correct number of columns required for a successful UNION based SQL injection attack.
-
-## Method
-
-Different payloads containing NULL values were tested within the category parameter.
-
-The first attempts caused Internal Server Error responses because the number of supplied columns did not match the original query structure.
-
-The following payload successfully solved the lab:
-
-```sql
+```
 ' UNION SELECT NULL,NULL,NULL--
 ```
 
-This confirmed that the original query returned three columns.
+Three NULL values worked. That told me the original query returned three columns. NULL was useful here because I could test the shape of the result before finding out which column accepted text.
 
-## Key Learning Points
-
-* UNION based SQL injection requires the same number of columns as the original query
-* NULL values are commonly used because they are compatible with most database column types
-* Error responses can reveal information about backend database behaviour
-* SQL injection vulnerabilities can expose sensitive application logic if user input is not handled securely
-
-## Tools Used
-
-* Burp Suite Community Edition
-* Google Chrome
-* PortSwigger Web Security Academy
+I would parameterise the category query. Hiding detailed database errors can reduce the information exposed, but the query still needs fixing.
 
 ## Screenshots
 
-Screenshots showing the injection attempts and successful payload are included in the screenshots folder.
+* [01 normal category page](screenshots/01-normal-category-page.png)
+* [02 one column error](screenshots/02-one-column-error.png)
+* [03 two column error](screenshots/03-two-column-error.png)
+* [04 three column success](screenshots/04-three-column-success.png)
+
+[Back to my PortSwigger injection labs](../README.md)
